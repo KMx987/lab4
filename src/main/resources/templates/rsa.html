@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Wygeneruj parę kluczy dla mnie</h2>
+<form th:action="@{/rsa-generate}" method="post">
+    <button type="submit">Generuj!</button>
+</form>
+<span th:if="${publicKey != null}">
+Oto Twój Klucz publiczny:
+    N: <span th:text="${publicKey.n()}"></span>
+    E: <span th:text="${publicKey.e()}"></span>
+</span>
+<span th:if="${encryptedValue != null}">
+        Wynik: <span th:text="${encryptedValue}"></span>
+    </span>
+
+<h2>Zenkryptuj mi dane</h2>
+<form th:action="@{/rsaenc}" method="post">
+    Podaj liczbę, którą chcesz zenkryptować: <input type="number" name="toBeEncrypted"/><br/>
+    <label>Podaj `n` z klucza publicznego: <input type="text" name="publicKey.n" required/></label><br/>
+    <label>Podaj `e` z klucza publicznego: <input type="text" name="publicKey.e" required/></label><br/>
+    <button type="submit">Enkryptuj</button>
+
+
+    <span th:if="${encryptedValue != null}">
+        Oryginalna wiadomosc: <span th:text="${toBeEncrypted}"></span>
+    </span>
+    <span th:if="${encryptedValue != null}">
+        Wynik: <span th:text="${encryptedValue}"></span>
+    </span>
+</form>
+
+<hr/>
+
+<h2>Zdekryptuj</h2>
+<form th:action="@{/rsadec}" method="post">
+    <input type="number" name="encryptedValue"/>
+    <button type="submit">Dekryptuj</button>
+
+    <span th:if="${decryptedValue != null}">
+        Zdeszyfrowana wiadomość: <span th:text="${decryptedValue}"></span>
+    </span>
+</form>
+
+</body>
+</html>
