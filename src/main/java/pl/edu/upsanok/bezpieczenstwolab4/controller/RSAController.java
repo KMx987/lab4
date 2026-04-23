@@ -34,8 +34,8 @@ public class RSAController {
 
   @PostMapping("/rsa-generate")
   public String generate(Model model) {
-    var publicKey = rsaService.generate(BigInteger.valueOf(61),
-                                        BigInteger.valueOf(53));
+    var publicKey = rsaService.generate(BigInteger.valueOf(103),
+                                        BigInteger.valueOf(107));
     model.addAttribute("publicKey", publicKey);
     return "rsa";
   }
