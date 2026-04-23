@@ -32,13 +32,15 @@ public class RSAController {
     return "rsa";
   }
 
-  @PostMapping("/rsa-generate")
-  public String generate(Model model) {
-    var publicKey = rsaService.generate(BigInteger.valueOf(103),
-                                        BigInteger.valueOf(107));
-    model.addAttribute("publicKey", publicKey);
-    return "rsa";
-  }
+    @PostMapping("/rsa-generate")
+    public String generate(Model model) {
+        BigInteger p = BigInteger.probablePrime(128, new java.util.Random());
+        BigInteger q = BigInteger.probablePrime(128, new java.util.Random());
+
+        var publicKey = rsaService.generate(p, q);
+        model.addAttribute("publicKey", publicKey);
+        return "rsa";
+    }
 
   @PostMapping("/rsaenc")
   public String calc1(@RequestParam int toBeEncrypted, Model model) {

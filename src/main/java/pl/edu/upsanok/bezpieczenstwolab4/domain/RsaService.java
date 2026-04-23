@@ -10,8 +10,12 @@ public class RsaService {
     public PublicKey generate(BigInteger p, BigInteger q) {
 
         BigInteger n = p.multiply(q);
-        BigInteger phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+        BigInteger phi = p.subtract(BigInteger.ONE)
+                .multiply(q.subtract(BigInteger.ONE));
         BigInteger e = BigInteger.valueOf(7);
+        while (!phi.gcd(e).equals(BigInteger.ONE)) {
+            e = e.add(BigInteger.TWO);
+        }
         BigInteger d = e.modInverse(phi);
         this.privateKey = new PrivateKey(d, n);
         return new PublicKey(e, n);
